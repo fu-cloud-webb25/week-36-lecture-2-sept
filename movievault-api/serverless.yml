@@ -10,9 +10,56 @@ provider:
         role: ${file(./config.yml):role}
 
 functions:
+    ## MOVIES
     getMovies:
         handler: functions/movies/getMovies/index.handler
         events:
             - httpApi:
                   path: /api/movies
                   method: GET
+    getMovieById:
+        handler: functions/movies/getMovieById/index.handler
+        events:
+            - httpApi:
+                  path: /api/movies/{id}
+                  method: GET
+    addNewMovie:
+        handler: functions/movies/addNewMovie/index.handler
+        events:
+            - httpApi:
+                  path: /api/movies
+                  method: POST
+    updateMovie:
+        handler: functions/movies/updateMovie/index.handler
+        events:
+            - httpApi:
+                  path: /api/movies/{id}
+                  method: PATCH
+    deleteMovie:
+        handler: functions/movies/deleteMovie/index.handler
+        events:
+            - httpApi:
+                  path: /api/movies/{id}
+                  method: DELETE
+
+    ## AUTH
+    login:
+        handler: functions/auth/login/index.handler
+        events:
+            - httpApi:
+                  path: /api/auth/login
+                  method: POST
+
+    ## FAVORITES
+    getFavorites:
+        handler: functions/favorites/getFavorites/index.handler
+        events:
+            - httpApi:
+                  path: /api/favorites
+                  method: GET
+    addFavorite:
+        handler: functions/favorites/addFavorite/index.handler
+        events:
+            - httpApi:
+                  path: /api/favorites
+                  method: POST
