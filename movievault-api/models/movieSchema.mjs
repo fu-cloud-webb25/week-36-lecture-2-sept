@@ -13,3 +13,10 @@ export const movieSchema = z.object({
 
     genre : z.string('Genre must be a string!!').min(1, 'Genre is required!!'),
 });
+
+export const movieUpdateSchema = movieSchema
+    .partial()
+    .refine((data) => Object.keys(data).length > 0, {
+        message: 'At least one movie field must be provided for update',
+        path: []
+    });
