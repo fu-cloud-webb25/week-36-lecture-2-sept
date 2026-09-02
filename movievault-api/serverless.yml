@@ -1,0 +1,18 @@
+org: fe23devs
+service: movievault-api
+
+provider:
+    name: aws
+    runtime: nodejs24.x
+    architecture: arm64
+    region: eu-north-1
+    iam:
+        role: ${file(./config.yml):role}
+
+functions:
+    getMovies:
+        handler: functions/movies/getMovies/index.handler
+        events:
+            - httpApi:
+                  path: /api/movies
+                  method: GET
