@@ -1,8 +1,9 @@
 import middy from '@middy/core';
 import httpJsonBodyParser from '@middy/http-json-body-parser';
 import { sendResponse } from "../../../responses/index.mjs";
-import { validateUser } from '../../../middlewares/validateBody.mjs';
+import { validateBody } from '../../../middlewares/validateBody.mjs';
 import { errorHandler } from '../../../middlewares/errorHandler.mjs';
+import { loginSchema } from '../../../models/userSchema.mjs';
 import { users } from '../../../data/users.mjs';
 import { signToken } from '../../../utils/token.mjs';
 
@@ -29,8 +30,6 @@ export const handler = middy(async (event) => {
       message : 'Username and/or password are incorrect'
     });
   }
-
-  return sendResponse(200, { body });
 }).use(httpJsonBodyParser())
-  .use(validateUser())
+  .use(validateBody(loginSchema))
   .use(errorHandler());

@@ -1,9 +1,8 @@
 import createError from 'http-errors';
-import { loginSchema } from '../models/userSchema.mjs';
 
-export const validateUser = () => ({
+export const validateBody = (schema) => ({
     before : (handler) => {
-        const result = loginSchema.safeParse(handler.event.body);
+        const result = schema.safeParse(handler.event.body);
         if(!result.success) {
             throw createError(400, result.error.issues[0].message);
         }
